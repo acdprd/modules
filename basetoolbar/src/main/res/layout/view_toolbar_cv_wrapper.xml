@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/frameRoot"
+        style="@style/BackgroundBorderless"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:clickable="true"
+        android:focusable="true"
+        tools:background="@color/black">
+
+    </FrameLayout>
+</layout>

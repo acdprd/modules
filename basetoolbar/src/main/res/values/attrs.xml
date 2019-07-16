@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BaseToolbar">
+        <attr name="android:text" />
+        <attr name="navButton" format="reference|integer"/>
+    </declare-styleable>
+
+</resources>
