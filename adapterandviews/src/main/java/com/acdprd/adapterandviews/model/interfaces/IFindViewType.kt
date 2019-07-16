@@ -1,7 +1,5 @@
 package com.acdprd.adapterandviews.model.interfaces
 
-interface IFindViewType {
-    fun find(type:Int): IViewType
-
-    fun getDefault(): IViewType
+interface IFindViewType<VIEW_TYPE : IViewType> {
+    fun find(type: Int): VIEW_TYPE?
 }

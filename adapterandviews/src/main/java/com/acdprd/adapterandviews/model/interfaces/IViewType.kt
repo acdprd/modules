@@ -1,6 +1,6 @@
 package com.acdprd.adapterandviews.model.interfaces
 
 
-interface IViewType  {
+interface IViewType {
     fun getType(): Int
 }

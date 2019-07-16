@@ -5,9 +5,10 @@ import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.acdprd.adapterandviews.model.ViewTypeFinder
 import com.acdprd.adapterandviews.model.interfaces.IFindViewType
-import com.acdprd.adapterandviews.model.interfaces.IListItem
 import com.acdprd.adapterandviews.model.interfaces.IViewType
+import com.acdprd.adapterandviews.model.interfaces.ListItem
 import com.acdprd.adapterandviews.view.CustomListItemView
 import java.util.*
 
@@ -16,27 +17,31 @@ import java.util.*
  *
  * дополнительно не нужно переопрелять никаких методов кроме абстрактного
  * viewType как енам
- * каждая модель должна имплементить IListItem
+ * каждая модель должна имплементить ListItem
  */
-abstract class BaseItemAdapter :
-    RecyclerView.Adapter<ItemHolder<ViewDataBinding, Any, out CustomListItemView<ViewDataBinding, Any>?>>() {
-    protected var itemsClickListener: (IListItem) -> Unit = {}
-    protected var _items = mutableListOf<IListItem>()
+abstract class BaseItemAdapter<VIEW_TYPE> :
+    RecyclerView.Adapter<ItemHolder<ViewDataBinding, Any, out CustomListItemView<ViewDataBinding, Any>?>>() where VIEW_TYPE : IViewType, VIEW_TYPE : Enum<VIEW_TYPE> {
+    protected var itemsClickListener: (ListItem<VIEW_TYPE>) -> Unit = {}
+    protected var _items = mutableListOf<ListItem<VIEW_TYPE>>()
 
     override fun getItemCount(): Int = _items.size
 
-    fun setItems(items: List<IListItem>) {
-        this._items = items as ArrayList<IListItem>
+    fun setItems(items: List<ListItem<VIEW_TYPE>>) {
+        this._items = items as ArrayList<ListItem<VIEW_TYPE>>
         notifyDataSetChanged()
     }
 
     fun getItems(): List<Any> = _items
 
-    abstract fun getViewTypeFinder(): IFindViewType
+    abstract fun getViewTypeFinder(): IFindViewType<VIEW_TYPE>
+
+//    private inline fun <reified E : Enum<E>> getEnumAsArray(): Array<E> {
+//        return enumValues()
+//    }
 
     protected abstract fun getCustomView(
         context: Context,
-        viewType: IViewType
+        viewType: VIEW_TYPE?
     ): View?
 
     protected fun getCustomView(
@@ -77,7 +82,7 @@ abstract class BaseItemAdapter :
         return _items[position].getItemType().getType()
     }
 
-    fun findViewType(pos: Int): IViewType {
+    fun findViewType(pos: Int): VIEW_TYPE? {
         return getViewTypeFinder().find(getItemViewType(pos))
     }
 
@@ -85,28 +90,28 @@ abstract class BaseItemAdapter :
         return holder.getItemView()
     }
 
-    fun findItemPosition(item: IListItem): Int = _items.indexOf(item)
+    fun findItemPosition(item: ListItem<VIEW_TYPE>): Int = _items.indexOf(item)
 
-    fun setItemClickListener(l: (IListItem) -> Unit) {
+    fun setItemClickListener(l: (ListItem<VIEW_TYPE>) -> Unit) {
         itemsClickListener = l
     }
 
-    fun addItems(itemList: List<IListItem>) {
+    fun addItems(itemList: List<ListItem<VIEW_TYPE>>) {
         _items.addAll(itemList)
         notifyDataSetChanged()
     }
 
-    fun addItems(position: Int, itemList: List<IListItem>) {
+    fun addItems(position: Int, itemList: List<ListItem<VIEW_TYPE>>) {
         _items.addAll(position, itemList)
         notifyDataSetChanged()
     }
 
-    fun addItem(item: IListItem) {
+    fun addItem(item: ListItem<VIEW_TYPE>) {
         _items.add(item)
         notifyItemInserted(_items.size - 1)
     }
 
-    fun addItem(position: Int, item: IListItem) {
+    fun addItem(position: Int, item: ListItem<VIEW_TYPE>) {
         _items.add(position, item)
         notifyItemInserted(position)
     }
@@ -116,7 +121,7 @@ abstract class BaseItemAdapter :
         notifyItemRemoved(position)
     }
 
-    fun remove(item: IListItem) {
+    fun remove(item: ListItem<VIEW_TYPE>) {
         val pos = findItemPosition(item)
         _items.removeAt(pos)
         notifyItemRemoved(pos)
@@ -132,11 +137,11 @@ abstract class BaseItemAdapter :
         notifyItemMoved(pos1, pos2)
     }
 
-    fun getItem(position: Int): IListItem {
+    fun getItem(position: Int): ListItem<VIEW_TYPE> {
         return _items[position]
     }
 
-    fun removeAllExcept(vararg types: IViewType) {
+    fun removeAllExcept(vararg types: VIEW_TYPE) {
         for (item in _items.reversed()) {
             if (types.none { it == item.getItemType() }) {
                 remove(item)

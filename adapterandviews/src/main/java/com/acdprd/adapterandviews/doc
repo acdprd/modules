@@ -7,21 +7,17 @@ ex:
         override fun getType(): Int = ordinal
     }
 
- = добавить свой интерфейс (ака ListItem) метод которого возвращает вариант из енама, для удобства автоимпорта
- interface ListItem : IListItem {
-     override fun getItemType(): IViewType {
-         return getViewType()
-     }
-
-     fun getViewType(): ViewType
- }
+ = добавить свой интерфейс (ака ListItem) c типом возвращаемого енама
+ ex:
+    interface ListItem : ListItem<ViewType>
 
 
-
- = добавить свой адаптер, возвращающий объект имплементирующий IFindViewType(ищет IViewType по инту),
+ = добавить свой адаптер;
+ нужно переопределить возвращающий объект имплементирующий IFindViewType(ищет IViewType по инту),
     можно использовать ViewTypeFinder(), в конструктор передавать массив элементов енама, реализующего IViewType
 ex:
-    abstract class ItemAdapter : BaseItemAdapter(){
-
-        override fun getViewTypeFinder(): IFindViewType = ViewTypeFinder(ViewType.values())
+    abstract class ItemAdapter : BaseItemAdapter<ViewType>() {
+        override fun getViewTypeFinder(): IFindViewType<ViewType> {
+            return ViewTypeFinder(ViewType.values())
+        }
     }
