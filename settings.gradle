@@ -1,1 +1,1 @@
-include ':app', ':social', ':adapterandviews'
+include ':app', ':social', ':adapterandviews', ':basetoolbar'
