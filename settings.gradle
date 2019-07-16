@@ -1,1 +1,1 @@
-include ':app', ':social'
+include ':app', ':social', ':adapterandviews'
