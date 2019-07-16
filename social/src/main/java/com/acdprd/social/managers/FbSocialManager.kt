@@ -4,6 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import com.acdprd.social.managers.FbSocialManager.Consts.EMAIL
+import com.acdprd.social.managers.FbSocialManager.Consts.FIELDS
+import com.acdprd.social.managers.FbSocialManager.Consts.FIRST_NAME
+import com.acdprd.social.managers.FbSocialManager.Consts.ID
+import com.acdprd.social.managers.FbSocialManager.Consts.LAST_NAME
+import com.acdprd.social.managers.FbSocialManager.Consts.NAME
+import com.acdprd.social.managers.FbSocialManager.Consts.PUBLIC_PROFILE
 import com.acdprd.social.model.UserSocialData
 import com.facebook.*
 import com.facebook.internal.CallbackManagerImpl
@@ -13,13 +20,6 @@ import com.facebook.share.Sharer
 import com.facebook.share.model.ShareLinkContent
 import com.facebook.share.widget.ShareDialog
 import org.json.JSONException
-import com.acdprd.social.managers.FbSocialManager.Consts.EMAIL
-import com.acdprd.social.managers.FbSocialManager.Consts.FIELDS
-import com.acdprd.social.managers.FbSocialManager.Consts.FIRST_NAME
-import com.acdprd.social.managers.FbSocialManager.Consts.ID
-import com.acdprd.social.managers.FbSocialManager.Consts.LAST_NAME
-import com.acdprd.social.managers.FbSocialManager.Consts.NAME
-import com.acdprd.social.managers.FbSocialManager.Consts.PUBLIC_PROFILE
 import java.util.*
 
 /**
@@ -61,7 +61,7 @@ open class FbSocialManager : BaseSocialManager() {
     }
 
     override fun logout(result: (Boolean) -> Unit) {
-        LoginManager.getInstance().logOut()
+       Companion.logout(result)
     }
 
     private fun tryProfileRequest() {
@@ -90,11 +90,11 @@ open class FbSocialManager : BaseSocialManager() {
             } catch (e: JSONException) {
             }
             val body = UserSocialData.builder()
-                    .email(mail)
-                    .name(firstName)
-                    .surname(lastName)
-                    .socialId(id)
-                    .build()
+                .email(mail)
+                .name(firstName)
+                .surname(lastName)
+                .socialId(id)
+                .build()
             resultListener.invoke(body)
         }
 
@@ -132,8 +132,15 @@ open class FbSocialManager : BaseSocialManager() {
 
     private fun getShareContent(url: String?, quote: String? = null): ShareLinkContent {
         return ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse(url))
-                .build()
+            .setContentUrl(Uri.parse(url))
+            .build()
+    }
+
+    companion object {
+        fun logout(result: (Boolean) -> Unit = {}) {
+            LoginManager.getInstance().logOut()
+            result.invoke(AccessToken.getCurrentAccessToken() == null)
+        }
     }
 
 }

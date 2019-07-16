@@ -50,8 +50,7 @@ open class VkSocialManager : BaseSocialManager() {
     }
 
     override fun logout(result: (Boolean) -> Unit) {
-        VKSdk.logout()
-        result.invoke(VKAccessToken.currentToken() == null)
+        Companion.logout(result)
     }
 
     private fun tryProfileRequestVkApi() {
@@ -134,6 +133,11 @@ open class VkSocialManager : BaseSocialManager() {
             intent.putStringArrayListExtra("arg2", scopes)
             intent.putExtra("arg4", VKSdk.isCustomInitialize())
             return intent
+        }
+
+        fun logout(result: (Boolean) -> Unit={}) {
+            VKSdk.logout()
+            result.invoke(VKAccessToken.currentToken() == null)
         }
     }
 }

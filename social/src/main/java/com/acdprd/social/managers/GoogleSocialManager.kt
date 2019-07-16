@@ -24,6 +24,14 @@ class GoogleSocialManager(private var serverClientId: String) : BaseSocialManage
     companion object {
         const val GOOGLE_AUTH_CODE = 7878
         private val TAG = GoogleSocialManager::class.java.simpleName
+
+        fun logout(client: GoogleSignInClient?, result: (Boolean) -> Unit = {}) {
+            Auth.GoogleSignInApi
+                .signOut((client)?.asGoogleApiClient())
+                .setResultCallback {
+                    result.invoke(it.isSuccess)
+                }
+        }
     }
 
     override fun start(fragment: Fragment, l: (UserSocialData?) -> Unit) {
@@ -115,10 +123,6 @@ class GoogleSocialManager(private var serverClientId: String) : BaseSocialManage
     }
 
     override fun logout(result: (Boolean) -> Unit) {
-        Auth.GoogleSignInApi
-            .signOut(getClient(fragment.context!!)?.asGoogleApiClient())
-            .setResultCallback {
-                result.invoke(it.isSuccess)
-            }
+        Companion.logout(getClient(fragment.context!!), result)
     }
 }
