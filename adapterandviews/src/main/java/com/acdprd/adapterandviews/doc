@@ -9,7 +9,7 @@ ex:
 
  = добавить свой интерфейс (ака ListItem) c типом возвращаемого енама
  ex:
-    interface ListItem : ListItem<ViewType>
+    interface ListItem : IListItem<ViewType>
 
 
  = добавить свой адаптер;

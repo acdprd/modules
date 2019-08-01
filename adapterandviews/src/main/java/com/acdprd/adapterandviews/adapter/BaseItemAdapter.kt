@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.acdprd.adapterandviews.model.ViewTypeFinder
 import com.acdprd.adapterandviews.model.interfaces.IFindViewType
 import com.acdprd.adapterandviews.model.interfaces.IViewType
-import com.acdprd.adapterandviews.model.interfaces.ListItem
+import com.acdprd.adapterandviews.model.interfaces.IListItem
 import com.acdprd.adapterandviews.view.CustomListItemView
 import java.util.*
 
@@ -21,13 +21,13 @@ import java.util.*
  */
 abstract class BaseItemAdapter<VIEW_TYPE> :
     RecyclerView.Adapter<ItemHolder<ViewDataBinding, Any, out CustomListItemView<ViewDataBinding, Any>?>>() where VIEW_TYPE : IViewType, VIEW_TYPE : Enum<VIEW_TYPE> {
-    protected var itemsClickListener: (ListItem<VIEW_TYPE>) -> Unit = {}
-    protected var _items = mutableListOf<ListItem<VIEW_TYPE>>()
+    protected var itemsClickListener: (IListItem<VIEW_TYPE>) -> Unit = {}
+    protected var _items = mutableListOf<IListItem<VIEW_TYPE>>()
 
     override fun getItemCount(): Int = _items.size
 
-    fun setItems(items: List<ListItem<VIEW_TYPE>>) {
-        this._items = items as ArrayList<ListItem<VIEW_TYPE>>
+    fun setItems(items: List<IListItem<VIEW_TYPE>>) {
+        this._items = items as ArrayList<IListItem<VIEW_TYPE>>
         notifyDataSetChanged()
     }
 
@@ -90,28 +90,28 @@ abstract class BaseItemAdapter<VIEW_TYPE> :
         return holder.getItemView()
     }
 
-    fun findItemPosition(item: ListItem<VIEW_TYPE>): Int = _items.indexOf(item)
+    fun findItemPosition(item: IListItem<VIEW_TYPE>): Int = _items.indexOf(item)
 
-    fun setItemClickListener(l: (ListItem<VIEW_TYPE>) -> Unit) {
+    fun setItemClickListener(l: (IListItem<VIEW_TYPE>) -> Unit) {
         itemsClickListener = l
     }
 
-    fun addItems(itemList: List<ListItem<VIEW_TYPE>>) {
+    fun addItems(itemList: List<IListItem<VIEW_TYPE>>) {
         _items.addAll(itemList)
         notifyDataSetChanged()
     }
 
-    fun addItems(position: Int, itemList: List<ListItem<VIEW_TYPE>>) {
+    fun addItems(position: Int, itemList: List<IListItem<VIEW_TYPE>>) {
         _items.addAll(position, itemList)
         notifyDataSetChanged()
     }
 
-    fun addItem(item: ListItem<VIEW_TYPE>) {
+    fun addItem(item: IListItem<VIEW_TYPE>) {
         _items.add(item)
         notifyItemInserted(_items.size - 1)
     }
 
-    fun addItem(position: Int, item: ListItem<VIEW_TYPE>) {
+    fun addItem(position: Int, item: IListItem<VIEW_TYPE>) {
         _items.add(position, item)
         notifyItemInserted(position)
     }
@@ -121,7 +121,7 @@ abstract class BaseItemAdapter<VIEW_TYPE> :
         notifyItemRemoved(position)
     }
 
-    fun remove(item: ListItem<VIEW_TYPE>) {
+    fun remove(item: IListItem<VIEW_TYPE>) {
         val pos = findItemPosition(item)
         _items.removeAt(pos)
         notifyItemRemoved(pos)
@@ -137,7 +137,7 @@ abstract class BaseItemAdapter<VIEW_TYPE> :
         notifyItemMoved(pos1, pos2)
     }
 
-    fun getItem(position: Int): ListItem<VIEW_TYPE> {
+    fun getItem(position: Int): IListItem<VIEW_TYPE> {
         return _items[position]
     }
 
