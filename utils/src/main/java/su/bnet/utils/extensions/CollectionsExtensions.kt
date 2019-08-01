@@ -1,7 +1,5 @@
 package su.bnet.utils.extensions
 
-import su.bnet.smartpot.model.CheckableItem
-import su.bnet.smartpot.model.ListItem
 import java.util.*
 import kotlin.reflect.KMutableProperty1
 
@@ -23,8 +21,8 @@ fun <T, R : Any, P : Any?> Iterable<T>.mapNotNullProperty(
     return this.mapNotNull { if (property.get(it) != null) transform.invoke(it) else null }
 }
 
-fun <T : Any> Iterable<T>.asCheckableItems(): MutableList<CheckableItem<T>> =
-    map { CheckableItem(it) }.toMutableList()
-
-fun <T : ListItem> Iterable<T>.asListItems(): MutableList<ListItem> =
-    map { it as ListItem }.toMutableList()
+//fun <T : Any> Iterable<T>.asCheckableItems(): MutableList<CheckableItem<T>> =
+//    map { CheckableItem(it) }.toMutableList()
+//
+//fun <T : ListItem> Iterable<T>.asListItems(): MutableList<ListItem> =
+//    map { it as ListItem }.toMutableList()
