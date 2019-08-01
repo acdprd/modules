@@ -1,5 +1,5 @@
 package com.acdprd.modules.model
 
-import com.acdprd.adapterandviews.model.interfaces.ListItem
+import com.acdprd.adapterandviews.model.interfaces.IListItem
 
-interface ListItem : ListItem<ViewType>
+interface ListItem : IListItem<ViewType>
