@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_56"
+        android:gravity="center_vertical"
+        tools:background="@android:color/holo_red_dark">
+
+
+            <com.acdprd.adapterandviews.view.Button
+                android:id="@+id/leftButton"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginLeft="@dimen/size_12"
+                android:minWidth="@dimen/size_40"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                tools:src="@drawable/ic_back_black" />
+
+        <TextView
+            android:id="@+id/tvToolbarTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_12"
+            android:layout_marginRight="@dimen/size_12"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_18"
+            android:visibility="visible"
+            tools:text="Тулбар" />
+
+        <LinearLayout
+            android:id="@+id/llRightButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginRight="@dimen/size_6"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+</layout>
