@@ -3,7 +3,6 @@
 
     <declare-styleable name="BaseToolbar">
         <attr name="android:text" />
-        <attr name="navButton" format="reference|integer"/>
     </declare-styleable>
 
 </resources>
