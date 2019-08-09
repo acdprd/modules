@@ -5,11 +5,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/frameRoot"
         style="@style/BackgroundBorderless"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:clickable="true"
         android:focusable="true"
-        tools:background="@color/black">
+        tools:background="@android:color/black">
 
     </FrameLayout>
 </layout>

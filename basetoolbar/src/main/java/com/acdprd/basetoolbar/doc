@@ -1,0 +1,47 @@
+- наследуемся от BaseToolbar \ B - биндинг, TB - енамы кнопок
+
+ex:
+class Toolbar @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : BaseToolbar<ViewToolbarBinding, ToolbarButton>(context, attrs, defStyleAttr) {
+
+    override fun getLayoutRes(): Int = R.layout.view_toolbar
+
+    override fun getLeftButton(): ImageView = binding.leftButton
+
+    override fun getRightButtons(): ViewGroup = binding.llRightButtons
+
+    override fun getTitleTv(): TextView = binding.tvToolbarTitle
+
+    override fun getDrawableForButton(toolbarButton: ToolbarButton): Drawable? {
+       return context?.resources?.getDrawable(ToolbarHelper.getDrawableForButton(toolbarButton))
+    }
+}
+
+- TB - енамы кнопок
+ ex: enum class ToolbarButton
+
+- opt реализуем IToolbarHelper<ToolbarButton> возвращает ресурс по TB
+
+ex: object ToolbarHelper : IToolbarHelper<ToolbarButton>{
+    override fun getDrawableForButton(toolbarButton: ToolbarButton): Int {
+        return when(toolbarButton){
+            ToolbarButton.BACK -> R.drawable.ic_back_black
+            ToolbarButton.ARROW -> R.drawable.ic_arrow_right_black
+
+            else ->0
+        }
+    }
+}
+
+
+==todo experimental
+private var buttonMenu = object: AddRightButtonWithMenu<ToolbarButton,Action,ContentActions,OptionsView>(this){
+        override fun getOptionsView(): OptionsView {
+            return OptionsView(context)
+        }
+    }
+
+    fun showMenu(tb:ToolbarButton,actions:ContentActions,l:(Action)->Unit){
+            buttonMenu.add(tb,actions,l)
+        }

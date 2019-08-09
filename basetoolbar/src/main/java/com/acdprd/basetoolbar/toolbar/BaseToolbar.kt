@@ -13,11 +13,9 @@ import com.acdprd.adapterandviews.view.CustomView
 import com.acdprd.basetoolbar.R
 import com.acdprd.basetoolbar.model.IToolbarHelper
 
-abstract class BaseToolbar<B : ViewDataBinding, TB : Enum<TB>, TH : IToolbarHelper<TB>> @JvmOverloads constructor(
+abstract class BaseToolbar<B : ViewDataBinding, TB : Enum<TB>> @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CustomView<B>(context, attrs, defStyleAttr) {
-
-    private var toolbarHelper: TH = getToolbarHelper()
 
     init {
         readAttrs(attrs, defStyleAttr)
@@ -32,76 +30,76 @@ abstract class BaseToolbar<B : ViewDataBinding, TB : Enum<TB>, TH : IToolbarHelp
     }
 
 
-    abstract fun getTitleTv(): TextView
+   protected abstract fun getTitleTv(): TextView
 
-    abstract fun getLeftButton(): ImageView
+    protected  abstract fun getLeftButton(): ImageView
 
-    abstract fun getRightButtons(): ViewGroup
+    protected  abstract fun getRightButtons(): ViewGroup
 
-    abstract fun getToolbarHelper(): TH
+    abstract fun getDrawableForButton(toolbarButton:TB): Drawable?
 
-    protected open fun setTitle(tv: TextView, title: String?): BaseToolbar<B, TB, TH> {
+    protected open fun setTitle(tv: TextView, title: String?): BaseToolbar<B, TB> {
         tv.visibility = VISIBLE
         tv.text = title
         return this
     }
 
-    protected open fun setTitle(title: String?): BaseToolbar<B, TB, TH> {
+     open fun setTitle(title: String?): BaseToolbar<B, TB> {
         getTitleTv().visibility = View.VISIBLE
         getTitleTv().text = title
         return this
     }
 
-    protected open fun setLeftButton(
+     open fun setLeftButton(
         leftButton: ImageView,
         icon: Drawable
-    ): BaseToolbar<B, TB, TH> {
+    ): BaseToolbar<B, TB> {
         leftButton.visibility = View.VISIBLE
         leftButton.setImageDrawable(icon)
         return this
     }
 
-    protected open fun setLeftButton(
+     open fun setLeftButton(
         toolbarButton: TB,
         listener: () -> Unit
-    ): BaseToolbar<B, TB, TH> {
+    ): BaseToolbar<B, TB> {
         getLeftButton().visibility = View.VISIBLE
-        getLeftButton().setImageDrawable(toolbarHelper.getDrawableForButton(toolbarButton))
+        getLeftButton().setImageDrawable(getDrawableForButton(toolbarButton))
         getLeftButton().setOnClickListener { listener.invoke() }
         return this
     }
 
-    protected open fun setLeftButton(toolbarButton: TB): BaseToolbar<B, TB, TH> {
+     open fun setLeftButton(toolbarButton: TB): BaseToolbar<B, TB> {
         getLeftButton().visibility = View.VISIBLE
-        getLeftButton().setImageDrawable(toolbarHelper.getDrawableForButton(toolbarButton))
+        getLeftButton().setImageDrawable(getDrawableForButton(toolbarButton))
         return this
     }
 
-    protected open fun hideLeftButton() {
+     open fun hideLeftButton() {
         getLeftButton().visibility = View.GONE
     }
 
-    protected open fun setLeftButtonOnClickListener(l: () -> Unit): BaseToolbar<B, TB, TH> {
+     open fun setLeftButtonOnClickListener(l: () -> Unit): BaseToolbar<B, TB> {
         getLeftButton().setOnClickListener { l.invoke() }
         return this
     }
 
-    protected open fun addRightButton(tb: TB, l: () -> Unit): BaseToolbar<B, TB, TH> {
+     open fun addRightButton(tb: TB, l: () -> Unit): BaseToolbar<B, TB> {
         val b = ToolbarButtonWrapper(context)
-        b.setIcon(toolbarHelper.getDrawableForButton(tb))
+        b.setIcon(getDrawableForButton(tb))
         b.setListener(l)
         getRightButtons().addView(b)
         return this
     }
 
-    protected open fun addRightCustomView(cv: CustomView<*>) {
+     open fun addRightCustomView(cv: View) {
         getRightButtons().addView(cv)
     }
 
     /**
      * добавляет кастомную вью в обертку, где слушатель на вьюхе
      */
-    protected open fun addRightCustomViewWithWrapper(cv: CustomView<*>) {
+     open fun addRightCustomViewWithWrapper(cv: CustomView<*>) {
         val twv = ToolbarCustomViewWrapper(context)
         twv.addView(cv, width, height) //todo ?
         getRightButtons().addView(twv)
@@ -110,13 +108,13 @@ abstract class BaseToolbar<B : ViewDataBinding, TB : Enum<TB>, TH : IToolbarHelp
     /**
      * добавляет кастомную вью в обертку, где слушатель на обертке
      */
-    protected open fun addRightCustomViewWithWrapper(cv: CustomView<*>, l: OnClickListener) {
+     open fun addRightCustomViewWithWrapper(cv: CustomView<*>, l: OnClickListener) {
         val twv = ToolbarCustomViewWrapper(context)
         twv.addView(cv)
         twv.setOnClickListener(l)
         getRightButtons().addView(twv)
     }
 
-    protected open fun clearRightButtons() = getRightButtons().removeAllViews()
+     open fun clearRightButtons() = getRightButtons().removeAllViews()
 
 }
