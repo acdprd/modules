@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/tvActionTitle"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_32" />
+</layout>
