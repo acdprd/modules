@@ -28,9 +28,6 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         toolbar.setLeftButton(ToolbarButton.BACK){
             toast("BACK")
-        }.setLeftButton()
-        toolbar.showMenu(ToolbarButton.ARROW, ContentActions(mutableListOf(Action.ACTION_1,Action.ACTION_2))){
-            toast(it.name)
         }
     }
 
