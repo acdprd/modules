@@ -1,4 +1,4 @@
-package com.acdprd.testcontent
+package su.bnet.utils
 
 import su.bnet.utils.extensions.firstCharToUpper
 import su.bnet.utils.extensions.nextChar
@@ -6,7 +6,7 @@ import su.bnet.utils.extensions.nextCharRu
 import su.bnet.utils.extensions.randomElement
 import kotlin.random.Random
 
-object TestInstance {
+object ContentGenerator {
 
     object Reuse {
         fun randomWords(
@@ -16,7 +16,12 @@ object TestInstance {
         ): String {
             return StringBuilder().apply {
                 for (i in 0 until count) {
-                    append(randomWord(english = english, firstCharUpperCase = firstCharUpperCase))
+                    append(
+                        randomWord(
+                            english = english,
+                            firstCharUpperCase = firstCharUpperCase
+                        )
+                    )
                     append(" ")
                 }
             }.toString()
