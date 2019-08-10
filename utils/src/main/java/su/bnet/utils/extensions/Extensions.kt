@@ -8,14 +8,7 @@ import android.content.Context
 import android.support.annotation.StringRes
 import android.util.Log
 import com.google.gson.Gson
-import org.greenrobot.eventbus.EventBus
-import su.bnet.smartpot.BuildConfig
-import su.bnet.smartpot.R
-import su.bnet.smartpot.event.ErrorEvent
-import su.bnet.smartpot.helpers.picasso.OfflineUtils
-import su.bnet.smartpot.helpers.picasso.PicassoWrapper
-import su.bnet.smartpot.model.Pot
-import su.bnet.smartpot.network.exceptions.ApiErrorException
+import su.bnet.utils.BuildConfig
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -126,13 +119,6 @@ fun <L : LiveData<T>, T : Any?> L.observeIt(owner: LifecycleOwner, observe: (T?)
     this.observe(owner, Observer<T?> { o -> observe.invoke(o) })
 }
 
-fun eventError(e: Throwable) {
-    if (e is ApiErrorException) {
-        EventBus.getDefault().postSticky(ErrorEvent(e.apiError.error))
-    } else {
-        EventBus.getDefault().postSticky(ErrorEvent(e.message))
-    }
-}
 
 fun <C : Context?> C.warning(
     title: String?,
@@ -162,14 +148,14 @@ fun <C : Context?> C.warning(
             }
         }
         val b = builder.create()
-        b.setOnShowListener {
-            b.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE)
-                .setTextColor(resources.getColor(R.color.green_8b))
-            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE)
-                .setTextColor(resources.getColor(R.color.gray_9a))
-            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL)
-                .setTextColor(resources.getColor(R.color.gray_9a))
-        }
+//        b.setOnShowListener {
+//            b.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE)
+//                .setTextColor(resources.getColor(R.color.green_8b))
+//            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE)
+//                .setTextColor(resources.getColor(R.color.gray_9a))
+//            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL)
+//                .setTextColor(resources.getColor(R.color.gray_9a))
+//        }
         b.setCancelable(cancelable)
         b.show()
     }
@@ -187,26 +173,23 @@ fun <C : Context?> C.warning(text: String) {
         adb.setMessage(text)
         adb.setPositiveButton("OK") { dialogInterface, i -> dialogInterface.dismiss() }
         val b = adb.create()
-        b.setOnShowListener {
-            b.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE)
-                .setTextColor(resources.getColor(R.color.green_8b))
-            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE)
-                .setTextColor(resources.getColor(R.color.gray_9a))
-            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL)
-                .setTextColor(resources.getColor(R.color.gray_9a))
-        }
+//        b.setOnShowListener {
+//            b.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE)
+//                .setTextColor(resources.getColor(R.color.green_8b))
+//            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE)
+//                .setTextColor(resources.getColor(R.color.gray_9a))
+//            b.getButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL)
+//                .setTextColor(resources.getColor(R.color.gray_9a))
+//        }
         b.show()
     }
 }
 
-fun wrapImage(imageUrl:String, pot: Pot, type: OfflineUtils.FileType):String{
-    return PicassoWrapper.get().makeUrl(imageUrl, pot, type)
-}
 
 fun log(w:String){
-    if (BuildConfig.DEV) Log.d("DEV log >",w)
+    if (BuildConfig.DEBUG) Log.d("DEV log >",w)
 }
 
 fun log(p:Int){
-    if (BuildConfig.DEV) Log.d("DEV log >",p.toString())
+    if (BuildConfig.DEBUG) Log.d("DEV log >",p.toString())
 }

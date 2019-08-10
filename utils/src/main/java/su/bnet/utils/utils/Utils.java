@@ -3,6 +3,7 @@ package su.bnet.utils.utils;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -98,6 +99,10 @@ public class Utils {
     public static Intent getIntentForRoute(double x, double y) {
         return new Intent(Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?daddr=" + x + "," + y));
+    }
+
+    public static Intent getIntentForExternalLink(@NonNull String link) {
+        return Intent.createChooser(new Intent(Intent.ACTION_VIEW, Uri.parse(link)), null);
     }
 
     public static Intent getIntentToTurnGpsOn(){
