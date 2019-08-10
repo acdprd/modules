@@ -11,7 +11,10 @@
             <option value="$PROJECT_DIR$/adapterandviews" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/basetoolbar" />
+            <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/rxutils" />
             <option value="$PROJECT_DIR$/social" />
+            <option value="$PROJECT_DIR$/testcontent" />
             <option value="$PROJECT_DIR$/utils" />
           </set>
         </option>
