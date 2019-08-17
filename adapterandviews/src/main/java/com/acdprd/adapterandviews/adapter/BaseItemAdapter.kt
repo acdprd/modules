@@ -27,7 +27,7 @@ abstract class BaseItemAdapter<VIEW_TYPE> :
     override fun getItemCount(): Int = _items.size
 
     fun setItems(items: List<IListItem<VIEW_TYPE>>) {
-        this._items = items as ArrayList<IListItem<VIEW_TYPE>>
+        this._items = items as MutableList<IListItem<VIEW_TYPE>>
         notifyDataSetChanged()
     }
 

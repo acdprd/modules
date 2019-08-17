@@ -31,7 +31,10 @@ abstract class BasePaginationAdapter<VT> :
 
     abstract fun getLastItemPredicate(): (Int) -> Boolean
 
-    open fun <LIST_ITEM:IListItem<VT>> addNextPageItems(data:MutableList<LIST_ITEM>,nextPage:Boolean){
+    open fun <LIST_ITEM : IListItem<VT>> addNextPageItems(
+        data: MutableList<LIST_ITEM>,
+        nextPage: Boolean
+    ) {
         if (nextPage) {
             addItems(data)
         } else {
