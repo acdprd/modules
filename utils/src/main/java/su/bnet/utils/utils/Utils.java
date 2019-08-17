@@ -3,10 +3,18 @@ package su.bnet.utils.utils;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.text.InputType;
+import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.TypefaceSpan;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +23,7 @@ import java.util.Locale;
 
 import kotlin.Pair;
 import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
 
 /**
@@ -52,12 +61,44 @@ public class Utils {
      * @param color       - colorRes
      * @param toUpperCase - toUpperCase
      */
-    public static void recolor(TextView tv, int start, int end, @ColorRes int color, boolean toUpperCase) {
+    public static TextView recolor(TextView tv, int start, int end, @ColorRes int color, boolean toUpperCase) {
         SpannableStringBuilder ssb;
         if (toUpperCase) ssb = new SpannableStringBuilder(tv.getText().toString().toUpperCase());
         else ssb = new SpannableStringBuilder(tv.getText());
         ssb.setSpan(new ForegroundColorSpan(tv.getResources().getColor(color)), start, end, 0);
         tv.setText(ssb, TextView.BufferType.SPANNABLE);
+        return tv;
+    }
+
+    public static TextView resize(TextView tv, int start, int end, @DimenRes int size) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder(tv.getText());
+        ssb.setSpan(new AbsoluteSizeSpan(tv.getContext().getResources().getDimensionPixelSize(size)), start, end, 0);
+        tv.setText(ssb, TextView.BufferType.SPANNABLE);
+        return tv;
+    }
+
+    public static TextView refont(TextView tv, int start, int end, String fontFamily) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder(tv.getText());
+        ssb.setSpan(new TypefaceSpan(fontFamily), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return tv;
+    }
+
+    public static TextView setUnderLineWithListener(TextView tv, int start, int end, @NonNull final Function0<Unit> moveListener) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder(tv.getText());
+        ssb.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                moveListener.invoke();
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setUnderlineText(true);
+            }
+        }, start, end, 0);
+        tv.setMovementMethod(new LinkMovementMethod());
+        tv.setText(ssb, TextView.BufferType.SPANNABLE);
+        return tv;
     }
 
     /**
@@ -105,7 +146,7 @@ public class Utils {
         return Intent.createChooser(new Intent(Intent.ACTION_VIEW, Uri.parse(link)), null);
     }
 
-    public static Intent getIntentToTurnGpsOn(){
+    public static Intent getIntentToTurnGpsOn() {
         return new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
     }
 

@@ -3,6 +3,7 @@ package su.bnet.utils.extensions
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.ColorRes
+import android.support.annotation.DimenRes
 import android.support.annotation.DrawableRes
 import android.transition.TransitionManager
 import android.view.View
@@ -46,8 +47,14 @@ fun ImageView.loadByPicasso(url: Uri, size: Long): Unit = ImageUtils.loadImage(u
  * изменить цвет текста с\ по
  * toUppercase - если нужен капс текст (капс как атрибут стирает цвета)
  */
-fun TextView.recolor(start: Int, end: Int, @ColorRes color: Int, toUpperCase: Boolean = false) =
+fun TextView.recolor(start: Int, end: Int, @ColorRes color: Int, toUpperCase: Boolean = false):TextView =
     Utils.recolor(this, start, end, color, toUpperCase)
+
+fun TextView.resize(start: Int, end: Int, @DimenRes size: Int):TextView = Utils.resize(this, start, end, size)
+
+fun TextView.refont(start: Int, end: Int, ff: String):TextView = Utils.refont(this, start, end, ff)
+
+fun TextView.clickSpan(start: Int, end: Int, l: () -> Unit):TextView = Utils.setUnderLineWithListener(this, start, end, l)
 
 fun <T : View> T.collapse(
     duration: Number = Consts.DEFAULT_ANIM_TIME,
