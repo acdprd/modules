@@ -11,6 +11,7 @@ import com.acdprd.modules.model.ModelS
 import com.acdprd.modules.model.ToolbarButton
 import com.acdprd.modules.model.action.Action
 import com.acdprd.modules.model.action.ContentActions
+import com.acdprd.modules.test.MoveTest
 import com.acdprd.modules.view.toolbar.Toolbar
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setToolbar()
         setViews()
+        MoveTest.test2()
     }
 
     private fun setToolbar() {
