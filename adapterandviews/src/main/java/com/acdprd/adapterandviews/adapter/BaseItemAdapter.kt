@@ -44,15 +44,15 @@ abstract class BaseItemAdapter<VIEW_TYPE> :
         viewType: VIEW_TYPE?
     ): View?
 
-    protected fun getCustomView(
-        context: Context,
-        viewType: Int
-    ): CustomListItemView<ViewDataBinding, Any>? {
-        return getCustomView(
-            context,
-            getViewTypeFinder().find(viewType)
-        ) as? CustomListItemView<ViewDataBinding, Any>
-    }
+//    protected fun getCustomView(
+//        context: Context,
+//        viewType: Int
+//    ): CustomListItemView<ViewDataBinding, Any>? {
+//        return getCustomView(
+//            context,
+//            getViewTypeFinder().find(viewType)
+//        ) as? CustomListItemView<ViewDataBinding, Any>
+//    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
