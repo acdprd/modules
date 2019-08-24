@@ -1,10 +1,10 @@
 package com.acdprd.modules.model
 
-class ModelF(var text: String) : ListItem {
-    override fun getItemType(): ViewType = ViewType.FIRST
+class ModelF(var text: String) : ListItem2 {
+    override fun getItemType(): ViewType2 = ViewType2.FIRST2
 
 }
 
-class ModelS(var text: String) : ListItem {
-    override fun getItemType(): ViewType = ViewType.SECOND
+class ModelS(var text: String) : ListItem2 {
+    override fun getItemType(): ViewType2 = ViewType2.SECOND2
 }

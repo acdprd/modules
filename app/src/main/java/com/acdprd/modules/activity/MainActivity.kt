@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.acdprd.modules.R
 import com.acdprd.modules.adapter.TestAdapter
+import com.acdprd.modules.adapter.TestAdapter2
 import com.acdprd.modules.model.ModelF
 import com.acdprd.modules.model.ModelS
 import com.acdprd.modules.model.ToolbarButton
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun setViews() {
         rv = findViewById(R.id.recyclerView)
 
-        val adapter = TestAdapter()
+        val adapter = TestAdapter2()
 
         rv.adapter = adapter
 

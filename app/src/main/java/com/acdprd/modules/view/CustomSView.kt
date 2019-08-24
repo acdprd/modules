@@ -9,7 +9,7 @@ import com.acdprd.modules.databinding.ViewCustomSBinding
 
 class CustomSView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : CustomListItemView<ViewCustomSBinding, ModelS>(context, attrs, defStyleAttr) {
+) :  CustomListItemView<ViewCustomSBinding, ModelS>(context, attrs, defStyleAttr) {
 
     init {
         setMatchWrap()
