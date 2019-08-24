@@ -4,7 +4,7 @@ import android.content.Context
 import android.databinding.ViewDataBinding
 import android.util.AttributeSet
 
-abstract class CustomListItemView<B : ViewDataBinding, M : Any> : CustomView<B> {
+abstract class CustomListItemView<B : ViewDataBinding, M : Any > : CustomView<B> {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
