@@ -1,10 +1,13 @@
 package su.bnet.utils.utils;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
+import android.support.annotation.FontRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -14,6 +17,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TypefaceSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -25,6 +29,7 @@ import kotlin.Pair;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
+import su.bnet.utils.helper.CustomTypefaceSpan;
 
 /**
  * Created by Timur Khakimov on 15.04.2019
@@ -80,6 +85,19 @@ public class Utils {
     public static TextView refont(TextView tv, int start, int end, String fontFamily) {
         SpannableStringBuilder ssb = new SpannableStringBuilder(tv.getText());
         ssb.setSpan(new TypefaceSpan(fontFamily), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return tv;
+    }
+
+    public static TextView refontCustom(TextView tv, int start, int end, @FontRes int fontRes) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder(tv.getText());
+        Typeface typeface = ResourcesCompat.getFont(tv.getContext(), fontRes);
+        if (typeface != null) {
+            ssb.setSpan(new CustomTypefaceSpan(typeface), start, end, 0);
+            tv.setText(ssb, TextView.BufferType.SPANNABLE);
+        } else {
+            Log.w("TypeFaceSpan", "typeface==null");
+        }
+
         return tv;
     }
 
