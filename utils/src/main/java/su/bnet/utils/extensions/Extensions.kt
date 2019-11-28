@@ -27,25 +27,7 @@ fun <T : Any> T.tag(): String = this.javaClass.simpleName
 
 fun <T : Any> Class<T>.tag(): String = this.javaClass.simpleName
 
-fun <T : Any> T.log(message: String) {
-    Log.d(tag(), message)
-}
 
-fun <T : Any> T.err(message: String) {
-    Log.e(tag(), message)
-}
-
-fun <T : Any> T.err(message: String?, tr:Throwable) {
-    Log.e(tag(), message, tr)
-}
-
-fun <T : Any> T.warn(message: String) {
-    Log.w(tag(), message)
-}
-
-fun <T : Any> T.warn(message: String, tr:Throwable) {
-    Log.w(tag(), message, tr)
-}
 /**
  * logw gson.toJson(obj) в консоль
  */
@@ -117,13 +99,4 @@ fun <L : LiveData<T>, T : Any> L.observeNotNull(owner: LifecycleOwner, observe: 
 
 fun <L : LiveData<T>, T : Any?> L.observeIt(owner: LifecycleOwner, observe: (T?) -> Unit) {
     this.observe(owner, Observer<T?> { o -> observe.invoke(o) })
-}
-
-
-fun log(w:String){
-    if (BuildConfig.DEBUG) Log.d("DEV log >",w)
-}
-
-fun log(p:Int){
-    if (BuildConfig.DEBUG) Log.d("DEV log >",p.toString())
 }
