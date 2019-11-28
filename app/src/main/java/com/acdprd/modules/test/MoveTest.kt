@@ -2,14 +2,10 @@ package com.acdprd.modules.test
 
 import com.acdprd.rxutils.asObservable
 import com.acdprd.rxutils.asSingle
-import com.acdprd.rxutils.observers.LambdaConsumer
-import com.acdprd.rxutils.observers.LambdaObserver
-import com.acdprd.rxutils.observers.LambdaSingle
+import com.acdprd.rxutils.observers.single.LambdaSingle
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import su.bnet.utils.helper.Logg
 import kotlin.random.Random
