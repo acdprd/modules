@@ -1,17 +1,23 @@
 package su.bnet.utils.extensions
 
+import android.annotation.TargetApi
+import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.RippleDrawable
 import android.net.Uri
-import android.support.annotation.ColorRes
-import android.support.annotation.DimenRes
-import android.support.annotation.DrawableRes
+import android.os.Build
+import android.support.annotation.*
 import android.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import su.bnet.utils.BuildConfig
 import su.bnet.utils.Consts
+import su.bnet.utils.R
 import su.bnet.utils.utils.AnimationUtils
 import su.bnet.utils.utils.ImageUtils
 import su.bnet.utils.utils.Utils
@@ -54,6 +60,8 @@ fun TextView.resize(start: Int, end: Int, @DimenRes size: Int):TextView = Utils.
 
 fun TextView.refont(start: Int, end: Int, ff: String):TextView = Utils.refont(this, start, end, ff)
 
+fun TextView.refontCustom(start: Int, end: Int,@FontRes fontRes: Int):TextView = Utils.refontCustom(this, start, end, fontRes)
+
 fun TextView.clickSpan(start: Int, end: Int, l: () -> Unit):TextView = Utils.setUnderLineWithListener(this, start, end, l)
 
 fun <T : View> T.collapse(
@@ -68,7 +76,49 @@ fun <T : View> T.expand(
 ) =
     AnimationUtils.expand(this, duration.toLong(), listener)
 
-//fun animateTransition(vg: ViewGroup, work: () -> Unit) {
-//    TransitionManager.beginDelayedTransition(vg)
-//    work.invoke()
-//}
+/**
+ * добавляет ripple эффект
+ */
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+fun <V : View> V.addRipple(@ColorRes color: Int): V {
+    this.background?.let { back ->
+        this.background = RippleDrawable(ColorStateList.valueOf(resources.getColor(color)), back, null)
+    }
+    return this
+}
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+fun <V : View> V.addRippleColor(@ColorInt color: Int): V {
+    this.background?.let { back ->
+        this.background = RippleDrawable(ColorStateList.valueOf(color), back, null)
+    }
+    return this
+}
+
+/**
+ * добавит rect со скругленными краями
+ * по умолчанию белый цвет и скругления 2dp
+ */
+fun View.addBackgroundRect(@ColorRes solidColor: Int = R.color.white, @DimenRes cornersRadius: Int = R.dimen.size_2): View {
+    val rect = getRectWithCorners(this.context, cornersRadius).also { drawable ->
+        drawable.setColor(resources.getColor(solidColor))
+    }
+    this.background = rect
+    return this
+}
+
+private fun getRectWithCorners(context: Context, @DimenRes cornerRadius: Int): GradientDrawable {
+    val drawable = GradientDrawable()
+    drawable.shape = GradientDrawable.RECTANGLE
+    val cornerRadiusF = context.resources.getDimensionPixelSize(cornerRadius).toFloat()
+    drawable.cornerRadii = floatArrayOf(
+        cornerRadiusF,
+        cornerRadiusF,
+        cornerRadiusF,
+        cornerRadiusF,
+        cornerRadiusF,
+        cornerRadiusF,
+        cornerRadiusF,
+        cornerRadiusF
+    )
+    return drawable
+}
