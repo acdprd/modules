@@ -1,4 +1,4 @@
-package com.acdprd.rxutils.observers
+package com.acdprd.rxutils.observers.completable
 
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable

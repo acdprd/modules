@@ -1,4 +1,4 @@
-package com.acdprd.rxutils.observers
+package com.acdprd.rxutils.observers.observable
 
 /**
  * by acdprd | 17.05.2019.

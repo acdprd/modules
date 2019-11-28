@@ -1,4 +1,4 @@
-package com.acdprd.rxutils.observers
+package com.acdprd.rxutils.observers.single
 
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable

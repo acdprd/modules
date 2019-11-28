@@ -1,4 +1,6 @@
-package com.acdprd.rxutils.observers
+package com.acdprd.rxutils.observers.completable
+
+import com.acdprd.rxutils.observers.completable.LambdaCompletable
 
 /**
  * by acdprd | 22.04.2019.
