@@ -9,6 +9,7 @@ class VkRequestListener @JvmOverloads constructor(
     var onComplete: (response: VKResponse) -> Unit,
     var onError: (VKError?) -> Unit = {}
 ) : VKRequest.VKRequestListener() {
+
     override fun onComplete(response: VKResponse?) {
         super.onComplete(response)
         response?.let { r ->
